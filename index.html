@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmbuConnect | Emergency Ambulance Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff3860;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(255, 56, 96, 0.5);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff3860;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #fff;
+        }
+
+        .nav-links li a:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width:100%;
+            height: 100px;
+            background: linear-gradient(transparent, #fff);
+        }
+
+        .hero-text {
+            max-width: 800px;
+            margin: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            background: #ff3860;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(255, 56, 96, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #ff1a4b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 56, 96, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn:hover::after {
+            transform: translateY(0);
+        }
+
+        .btn.small {
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+        }
+
+        /* Info Section */
+        .info-section, .steps, .hospitals, .drivers-section {
+            padding: 6rem 5%;
+            text-align: center;
+            background: white;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ff3860;
+            border-radius: 2px;
+        }
+
+        .info-card {
+            display: flex;
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .info-card img {
+            width: 50%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .info-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .info-details {
+            padding: 2.5rem;
+            text-align: left;
+            width: 60%;
+        }
+
+        .info-details h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-details p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .info-details strong {
+            color: #ff3860;
+            font-weight: 600;
+        }
+
+        /* Drivers Section */
+        .drivers-section {
+            background: #f9f9f9;
+        }
+
+        .drivers-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .driver-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 300px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .driver-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .driver-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 5px solid #ff3860;
+            display: block;
+        }
+
+        .driver-name {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .driver-number {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Steps */
+        .step-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            width: 320px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff3860, #ff6b81);
+        }
+
+        .step i {
+            font-size: 3rem;
+            color: #ff3860;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover i {
+            transform: scale(1.2);
+            color: #ff1a4b;
+        }
+
+        .step h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* Hospitals */
+        .hospital-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .hospital-card {
+            background: #fff;
+            padding: 2rem;
+            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid #ff3860;
+        }
+
+        .hospital-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .hospital-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .hospital-card p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        footer a {
+            color: #ff3860;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ff6b81;
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.8s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .info-card {
+                flex-direction: column;
+            }
+            
+            .info-card img {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .info-details {
+                width: 100%;
+            }
+            
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-text p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                gap: 1rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .step-container, .hospital-cards, .drivers-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step, .hospital-card, .driver-card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-text p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.8rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .driver-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">AmbuConnect</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#track">Track</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#hospitals">Hospitals</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-text animate__animated animate__fadeInUp">
+            <h1 class="animate__animated animate__fadeInUp animate__delay-1s">Emergency Ambulance Service</h1>
+            <p class="animate__animated animate__fadeInUp animate__delay-2s">Fast. Reliable. Life-Saving Ambulance Services at Your Fingertips.</p>
+            <a href="#track" class="btn animate__animated animate__fadeInUp animate__delay-3s">Track Ambulance <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Ambulance Info -->
+    <section class="info-section" id="track">
+        <h2>Ambulance Live Info</h2>
+        <div class="info-card">
+            <img src="ambulance.jpg" alt="Ambulance Image">
+            <div class="info-details">
+                <h3>Driver: Ahmed Ali</h3>
+                <p><i class="fas fa-ambulance"></i> Vehicle: AMB-786</p>
+                <p><i class="fas fa-phone"></i> Phone: <a href="tel:+923191876676">+ 21 32413232</a></p>
+                <p><i class="fas fa-clock"></i> ETA: <strong>8 Minutes</strong></p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;"></div>
+                </div>
+                <a href="tel:+923191876676" class="btn small"><i class="fas fa-phone"></i> Call Driver</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Drivers Section -->
+    <section class="drivers-section">
+        <h2>Contact us</h2>
+        <div class="drivers-container">
+            <div class="driver-card">
+                <img src="parvez.jpeg" alt="Rana Parvez" class="driver-photo">
+                <h3 class="driver-name">Rana Parvez</h3>
+                <p class="driver-number"><i class="fas fa-phone"></i> +92 319 1876676</p>
+                <p>3+ years of experience</p>
+            </div>
+            <div class="driver-card">
+                <img src="sami.jpeg" alt="Sami" class="driver-photo">
+                <h3 class="driver-name">Sami</h3>
+                <p class="driver-number"><i class="fas fa-phone"></i> +92 301 0232150</p>
+                <p>2+ years of experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="steps" id="how">
+        <h2>How It Works</h2>
+        <div class="step-container">
+            <div class="step">
+                <i class="fas fa-phone-alt"></i>
+                <h4>1. Book Ambulance</h4>
+                <p>Select location and request nearest available ambulance with just one tap on your phone.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-map-marked-alt"></i>
+                <h4>2. Track in Real-time</h4>
+                <p>See exactly where the ambulance is and get accurate arrival time estimates.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-hospital"></i>
+                <h4>3. Get to Hospital</h4>
+                <p>Our trained paramedics will provide care while transporting you to the selected hospital.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nearby Hospitals -->
+    <section class="hospitals" id="hospitals">
+        <h2>Partner Hospitals</h2>
+        <div class="hospital-cards">
+            <div class="hospital-card">
+                <h4><i class="fas fa-hospital"></i> Jinnah Hospital</h4>
+                <p>24/7 Emergency Services | 5.2km away</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+92219992345">+92 21 9992345</a></p>
+            </div>
+            <div class="hospital-card">
+                <h4><i class="fas fa-hospital"></i> Aga Khan University</h4>
+                <p>Advanced Trauma Center | 7.8km away</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+922134864211">+92 21 34864211</a></p>
+            </div>
+            <div class="hospital-card">
+                <h4><i class="fas fa-hospital"></i> Indus Hospital</h4>
+                <p>Free Quality Healthcare | 9.1km away</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+922135111234">+92 21 35111234</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>AmbuConnect</h3>
+            <p>Your trusted emergency medical response partner</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Need immediate help? <a href="tel:+923001234567"><i class="fas fa-phone"></i> Emergency: +92 300 1234567</a></p>
+            <p>&copy; 2025 AmbuConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
